@@ -64,13 +64,13 @@ public class MergeArrays {
         while (i < a1Size)
             a3[k++] = a1[i++];
 
-        while (i < a2Size)
+        while (j < a2Size)
             a3[k++] = a2[j++];
     }
 
     public static void printArray(int a1Size, int a2Size, int []a3) {
         for(int i = 0; i < a1Size + a2Size; i++) {
-            System.out.println(a3[i] + " ");
+            System.out.print(a3[i] + " ");
         }
     }
 
@@ -87,15 +87,15 @@ public class MergeArrays {
     }
 
     public static void main(String[] args) {
-        System.out.println("primeiro");
-        int []array1 = readValuesFromCommandLine();
-        int array1Length = array1.length;
-        System.out.println("segundo");
-        int []array2 = readValuesFromCommandLine();
-        int array2Length = array2.length;
+//        System.out.println("primeiro");
+        int []VETA = readValuesFromCommandLine();
+        int array1Length = VETA.length;
+//        System.out.println("segundo");
+        int []VETB = readValuesFromCommandLine();
+        int array2Length = VETB.length;
         int []array3 = new int[array1Length + array2Length];
 
-        merge2SortedArrays(array1, array2, array1Length, array2Length, array3);
+        merge2SortedArrays(VETA, VETB, array1Length, array2Length, array3);
         printArray(array1Length, array2Length, array3);
     }
 }
