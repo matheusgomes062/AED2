@@ -1,5 +1,7 @@
 import java.lang.*;
 import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.Queue;
 
     //MAIN START -------------------------------------------------------------------
     public class Main {
@@ -8,23 +10,70 @@ import java.util.Scanner;
         public static class Tree {
             private Node rootNode;
 
-            public boolean isLeaf(Node a){
-                if(a.getRightNode()==null && a.getLeftNode()==null) {
-                    return true;
-                }
-                return false;
-            }
-
-            public int getMax(int a, int b){
-                return (a>b) ? a : b;
-            }
+//            public boolean isLeaf(Node a){
+//                if(a.getRightNode()==null && a.getLeftNode()==null) {
+//                    return true;
+//                }
+//                return false;
+//            }
+//
+//            public int getMax(int a, int b){
+//                return (a>b) ? a : b;
+//            }
 
             //function to get the height of a tree or node
-            public int getHeight(Node a){
-                if(a==null) return 0;
-                if(isLeaf(a)) return 1;
-                //height of a node will be 1+ greater among height of right subtree and height of left subtree
-                return(getMax(getHeight(a.getLeftNode()), getHeight(a.getRightNode())) + 1);
+            public int getHeight(Node node){
+
+                // Base Case
+                if (node == null)
+                    return 0;
+
+                // Create an empty queue for level order tarversal
+                Queue<Node> q = new LinkedList();
+
+                // Enqueue Root and initialize height
+                q.add(node);
+                int height = 0;
+
+                while (1 == 1)
+                {
+                    // nodeCount (queue size) indicates number of nodes
+                    // at current lelvel.
+                    int nodeCount = q.size();
+                    if (nodeCount == 0)
+                        return height;
+                    height++;
+
+                    // Dequeue all nodes of current level and Enqueue all
+                    // nodes of next level
+                    while (nodeCount > 0)
+                    {
+                        Node newnode = q.peek();
+                        q.remove();
+                        if (newnode.getLeftNode() != null)
+                            q.add(newnode.getLeftNode());
+                        if (newnode.getRightNode() != null)
+                            q.add(newnode.getRightNode());
+                        nodeCount--;
+                    }
+                }
+
+//                if (a == null) return 0;
+//                else {
+//                    int lNode = getHeight(a.getLeftNode());
+//                    int rNode = getHeight(a.getRightNode());
+//
+//                    if(lNode > rNode) return lNode++;
+//                    else return rNode++;
+//                }
+
+
+
+
+//                if(a==null) return 0;
+//                if(isLeaf(a)) return 1;
+//                //height of a node will be 1+ greater among height of right subtree and height of left subtree
+//                return(getMax(getHeight(a.getLeftNode()), getHeight(a.getRightNode())) + 1);
             }
 
             public void insertValue(int value) {
@@ -170,7 +219,7 @@ import java.util.Scanner;
             int input;
 
             // read every input until it's negative
-            while ((input = scanner.nextInt()) > 0) {
+            while ((input = scanner.nextInt()) >= 0) {
                 _dictionarySizeStart++;
                 myTree.insertValue(input);
             }
@@ -186,15 +235,21 @@ import java.util.Scanner;
             boolean hasValue = myTree.containsValue(input);
             if (!hasValue) {
                 myTree.insertValue(input);
-                _treeHeightEnd ++;
+
                 _dictionarySizeEnd ++;
             } else {
                 myTree.deleteRecursively(myTree.getFirstNode(), input);
-                _treeHeightEnd --;
+
                 _dictionarySizeEnd --;
             }
             _dictionarySizeEnd += _dictionarySizeStart;
-            _treeHeightEnd += _treeHeightStart;
+
+            if (_dictionarySizeEnd == 0) {
+                _treeHeightEnd = 0;
+            }
+            else {
+                _treeHeightEnd = myTree.getHeight(myTree.getFirstNode());
+            }
         }
 
         public static void main(String[] args) {
